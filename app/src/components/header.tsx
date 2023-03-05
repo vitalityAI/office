@@ -52,12 +52,12 @@ const NavBar = () => {
   })
 
   return (
-    <nav className={`relative h-ful ${atTop ? 'bg-transparent' : 'bg-navy'} flex items-center justify-between z-10 py-2 px-4 sm:px-12 lg:px-24 transition-all ease-in-out duration-500`}>
+    <nav className={`relative h-ful ${atTop ? 'bg-transparent' : 'bg-navy'} flex items-center justify-between z-10 py-6 px-4 sm:px-12 lg:px-24 transition-all ease-in-out duration-500`}>
       <div className='flex relative z-20'>
         <HamburgerButton open={isOpen} onClick={() => setOpen(!isOpen)} />
         <Link href="/" passHref>
-          <a className="relative ml-4 w-12 md:w-24 aspect-[5/3] opacity-90 hover:opacity-100 transition-all ease-in-out">
-            <Image src="/images/logo.png" alt="Logo" layout="fill" />
+          <a className="relative ml-4 w-12 md:w-20 aspect-[5/3] opacity-90 hover:opacity-100 transition-all ease-in-out">
+            <Image src="/images/logo.svg" alt="Logo" layout="fill" />
           </a>
         </Link>
       </div>
