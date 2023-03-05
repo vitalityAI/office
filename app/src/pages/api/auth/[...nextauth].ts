@@ -35,6 +35,7 @@ export const authOptions = {
     async jwt({ token, user, account, profile, isNewUser }) {
       return token
     }
-  }
+  },
+  secret: process.env.SECRET
 }
 export default NextAuth(authOptions)
