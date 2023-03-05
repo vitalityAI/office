@@ -23,7 +23,7 @@ const Home: NextPage<any> = ({ officers }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${session.token.sub}`
+        'Authorization': `Bearer ${session['token'].sub}`
       },
       body: JSON.stringify({
         phone: input.phone
