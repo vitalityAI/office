@@ -47,6 +47,8 @@ const Demo: NextPage<any> = ({ officers }) => {
   }
 
   const popOut = async (session) => {
+    notify(toastDispatch, "", "Loading call log...", ToastType.DEFAULT)
+
     const messages = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/session/message/?sessionId=' + session.id, {
       method: 'GET',
       headers: {
@@ -66,6 +68,7 @@ const Demo: NextPage<any> = ({ officers }) => {
     console.log(session)
 
     setFocusSession(session)
+    notify(toastDispatch, "", "Loaded call log!", ToastType.SUCCESS)
   }
 
   const transfer = async () => {
@@ -112,26 +115,30 @@ const Demo: NextPage<any> = ({ officers }) => {
             {
               session ?
                 <>
-                  {focusSession ?
-                    <div className="absolute w-fit z-10 text-white bg-black bg-opacity-80 p-8 rounded-sm left-0 right-0 mx-auto">
-                      <button className={`absolute right-2 top-1 w-fit text-blue transition-all ease-in-out font-bold`} onClick={closePop}>{"X"}</button>
-                      <div className="flex items-center ">
+                  <div className={`absolute  ${focusSession ? "backdrop-blur-sm translate-y-0 opacity-100" : " backdrop-blur-0 translate-y-20 opacity-0"} transition-all w-fit max-w-5xl z-50 text-white bg-black bg-opacity-80 p-8 rounded-sm left-0 right-0 mx-auto`}>
+                    <button className={`absolute right-2 top-1 w-fit text-blue transition-all ease-in-out font-bold`} onClick={closePop}>{"X"}</button>
+                    {focusSession ?
+                      <><div className="flex items-center ">
                         <h2 className="w-fit text-3xl font-extrabold">Caller: {focusSession.callerPhone} | {focusSession.startedAt}</h2>
                         <OutlineButton name="Transfer" onClick={transfer} className="ml-8" />
                       </div>
-                      <p className="my-4 text-white"><span className="text-blue font-bold">Summary: </span>{focusSession.summary}</p>
-                      {focusSession.messages.map(msg => {
-                        return (
-                          <div key={msg.id}>
-                            <p className="text-white"><span className={`${msg.role == "USER" ? "text-green-300" : "text-blue-300"} font-bold`}>{msg.role}: </span>{msg.content}</p>
-                            <p></p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    : null
-                  }
-                  <div className={`${focusSession ? 'blur-sm' : 'blur-0'} transition-all`}>
+                        <p className="my-4 text-white"><span className="text-blue font-bold">Summary: </span>{focusSession.summary}</p>
+                        <div className="">
+                          {focusSession.messages.map(msg => {
+                            return (
+                              <div key={msg.id}>
+                                <p className="text-white"><span className={`${msg.role == "USER" ? "text-green-300" : "text-blue-300"} font-bold`}>{msg.role}: </span>{msg.content}</p>
+                                <p></p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </>
+                      : null
+                    }
+                  </div>
+
+                  <div className={`transition-all`}>
                     <div className='w-fit bg-white bg-opacity-5 rounded-md p-4 text-center mx-auto'>
                       <h2 className="text-white text-2xl font-extrabold">Hey {session.user.name.split(' ')[0]}!</h2>
                       <p className="text-white text-xl font-light mt-2"> Can you give us your number real quick?</p>
