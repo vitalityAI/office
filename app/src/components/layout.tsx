@@ -30,7 +30,7 @@ export const Layout: FC<any> = ({ dim=false, children }) => {
                 <Background className={dim ? "opacity-25" : 'opacity-100'}/>
                 <main className='relative w-full min-h-screen bg-transparent'>
                     {children}
-                    {/* <Footer/> */}
+                    <Footer/>
                 </main>
             </div>
         </>
