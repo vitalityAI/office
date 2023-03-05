@@ -35,23 +35,26 @@ const Home: NextPage<any> = ({ officers }) => {
 
   return (
     <Layout>
-      <div className="py-16 sm:py-24">
-        <div className='w-full mt-4 flex justify-start flex-wrap'>
-          <h1 className="text-white text-4xl font-bold">Vitality</h1>
-          {
-            session ?
-              <div>
+      <div className="py-16 sm:py-24 ">
+        {
+          session ?
+            <div className='w-fit bg-white bg-opacity-5 rounded-md p-4 text-center mx-auto'>
+              <h1 className="text-white text-2xl font-extrabold">Hey {session.user.name.split(' ')[0]}!</h1>
+              <p className="text-white text-xl font-light mt-2"> Can you give us your number real quick?</p>
+
+              <div className='w-fit mt-4 mx-auto flex justify-start flex-wrap'>
                 <div className='w-72 mr-4'>
-                  <InputField name="Phone Number" id="phone" value={input.phone} onChange={(e) => handleInputChange(e, input, setInput)} className="w-96" />
+                  <InputField name="Phone Number" id="phone" value={input.phone} onChange={(e) => handleInputChange(e, input, setInput)} className="w-full" />
                 </div>
                 <div className='mt-4 flex items-center justify-center'>
                   <OutlineButton name="Register" onClick={submit} />
                 </div>
               </div>
-              : null
-          }
+            </div>
+            : null
+        }
 
-        </div>
+
       </div>
 
     </Layout>
