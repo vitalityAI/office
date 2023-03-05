@@ -87,7 +87,7 @@ const Background = ({className}) => {
   return (
     <div className='fixed top-0 left-0 w-full h-full bg-navy z-[-1]'>
       <Particles
-        className={`w-full h-full ${className} opacity-20`}
+        className={`w-full h-full ${className} opacity-[0.15]`}
         options={particleParams}
       />
     </div>

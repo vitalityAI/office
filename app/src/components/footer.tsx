@@ -11,8 +11,8 @@ export const Footer = () => {
                 <p>Backend: <a className='inline-block align-middle' href="https://github.com/VitalityAI/therapist">
                     <img className='h-full' src="https://img.shields.io/github/last-commit/VitalityAI/therapist" />
                 </a></p>
-                <p className='ml-4'>Frontend: <a className='inline-block align-middle' href="https://github.com/VitalityAI/therapist">
-                    <img className='h-full' src="https://img.shields.io/github/last-commit/VitalityAI/therapist" />
+                <p className='ml-4'>Frontend: <a className='inline-block align-middle' href="https://github.com/VitalityAI/office">
+                    <img className='h-full' src="https://img.shields.io/github/last-commit/VitalityAI/office" />
                 </a></p>
             </div>
         </footer>

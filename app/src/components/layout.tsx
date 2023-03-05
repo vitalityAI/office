@@ -25,14 +25,7 @@ export const Layout: FC<any> = ({ dim=false, children }) => {
                 <meta name="theme-color" content="#64A2FF"/>
                 <meta name="background-color" content="#0a192f"/>
             </Head>
-            <Header/>
-            <div className='relative w-full m-0 h-screen'>
-                <Background className={dim ? "opacity-25" : 'opacity-100'}/>
-                <main className='relative w-full min-h-screen bg-transparent'>
-                    {children}
-                    <Footer/>
-                </main>
-            </div>
+            {children}
         </>
     );
 }
