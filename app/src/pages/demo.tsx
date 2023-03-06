@@ -11,6 +11,7 @@ import OutlineButton from "@/components/OutlineButton";
 import { useToasts } from "@/components/ToastProvider";
 import { useSession } from 'next-auth/react'
 import Background from '@/components/Background';
+import SiteLink from "@/components/SiteLink";
 
 const Session = ({ data, onClick = () => { }, ...props }) => {
   return (
@@ -183,7 +184,9 @@ const Demo: NextPage<any> = ({ officers }) => {
                     </div>
                     <div className="mt-16 text-white text-center p-4">
                       <h2 className="text-2xl font-extrabold">Active Calls</h2>
-                      <div className="flex justify-center flex-wrap">
+                      <p className="font-light mt-2">Due to usage restrictions, please contact either <SiteLink href={"https://arulandu.com"} txt="Alvan Caleb Arulandu" /> {' or '} <SiteLink href={"https://crucialnet.org"} txt="Rushil Umaretiya" /> for the hotline number!</p>
+
+                      <div className="mt-6 flex justify-center flex-wrap">
                         {sessions.map(session =>
                           <Session data={session} key={session.id} onClick={() => popOut(session)} />
                         )}
@@ -197,9 +200,9 @@ const Demo: NextPage<any> = ({ officers }) => {
           </div>
           <Footer />
         </main>
-      </div>
+      </div >
 
-    </Layout>
+    </Layout >
   );
 };
 

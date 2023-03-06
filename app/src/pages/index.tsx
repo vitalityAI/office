@@ -24,8 +24,8 @@ const Home: NextPage<any> = ({ officers }) => {
       <div className='relative w-full m-0 h-screen'>
         <Background className="" />
         <main className='relative w-full h-screen bg-transparent text-white '>
-          <div className="flex flex-col justify-center items-center ">
-            <div className="mt-72 max-w-xl">
+          <div className="px-8 flex flex-col justify-center items-center ">
+            <div className="mt-[25vh] sm:mt-[33vh] max-w-xl">
               <h1 className="text-6xl font-extrabold">vi·tal·i·ty</h1>
               <h2 className="text-xl font-light">[vī'talədē]&nbsp;&nbsp;<i>noun</i></h2>
               <ul className="ml-6 list-decimal">
