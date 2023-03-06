@@ -23,11 +23,13 @@ const Session = ({ data, onClick = () => { }, ...props }) => {
 }
 
 const Demo: NextPage<any> = ({ officers }) => {
+  const updateDelay = 2000
   const { toastDispatch } = useToasts();
   const [input, setInput] = useState({
     phone: '',
   })
   const [sessions, setSessions] = useState([])
+  const [loadingSummary, setLoadingSummary] = useState(false)
   const [focusSession, setFocusSession] = useState(null)
 
   const { data: session } = useSession()
@@ -46,33 +48,41 @@ const Demo: NextPage<any> = ({ officers }) => {
     notify(toastDispatch, "", "Updated Phone: " + input.phone, ToastType.SUCCESS)
   }
 
-  const popOut = async (session) => {
-    notify(toastDispatch, "", "Loading call log...", ToastType.DEFAULT)
+  const getSummary = async (sesh) => {
+    const summary = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/session/summary/?sessionId=' + sesh.id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })).json()
+    return summary.summary
+  }
 
-    const messages = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/session/message/?sessionId=' + session.id, {
+  const summarize = async () => {
+    // setLoadingSummary(true)
+    notify(toastDispatch, "", "Loading summary...", ToastType.DEFAULT)
+    focusSession.summary = await getSummary(focusSession)
+    notify(toastDispatch, "", "Loaded summary!", ToastType.SUCCESS)
+    setFocusSession(focusSession)
+    // setLoadingSummary(false)
+  }
+
+  const updateMessages = async (sesh) => {
+    const messages = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/session/message/?sessionId=' + sesh.id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
     })).json()
 
-    const summary = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/session/summary/?sessionId=' + session.id, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    })).json()
+    return messages.messages
+  }
 
-    session.messages = messages.messages;
-    session.summary = summary.summary;
-    console.log(session)
-
-    setFocusSession(session)
-    notify(toastDispatch, "", "Loaded call log!", ToastType.SUCCESS)
+  const popOut = async (sesh) => {
+    setFocusSession(sesh)
   }
 
   const transfer = async () => {
-    console.log(session['token'].sub)
     const res = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/session/transfer/?sessionId=' + focusSession.id, {
       method: 'GET',
       headers: {
@@ -88,6 +98,28 @@ const Demo: NextPage<any> = ({ officers }) => {
   }
 
   useEffect(() => {
+    const main = async () => {
+      const fetcher = async () => {
+        focusSession.messages = await updateMessages(focusSession)
+        setFocusSession(focusSession)
+      }
+      if (focusSession) {
+        if (!focusSession.messages) {
+          await fetcher();
+          const cycle = () => setTimeout(async () => {
+            if (focusSession) {
+              await fetcher()
+              cycle()
+            }
+          }, updateDelay)
+          cycle()
+        }
+      }
+    }
+    main()
+  }, [focusSession])
+
+  useEffect(() => {
     const interval = setInterval(async () => {
       const fetcher = async () => {
         const s = await (await fetch(process.env.NEXT_PUBLIC_API_URL + '/session?open=true', {
@@ -100,7 +132,7 @@ const Demo: NextPage<any> = ({ officers }) => {
         setSessions(s.sessions)
       }
       await fetcher()
-    }, 2000)
+    }, updateDelay)
 
     return () => clearInterval(interval)
   }, [])
@@ -119,12 +151,13 @@ const Demo: NextPage<any> = ({ officers }) => {
                     <button className={`absolute right-2 top-1 w-fit text-blue transition-all ease-in-out font-bold`} onClick={closePop}>{"X"}</button>
                     {focusSession ?
                       <><div className="flex items-center ">
-                        <h2 className="w-fit text-3xl font-extrabold">Caller: {focusSession.callerPhone} | {focusSession.startedAt}</h2>
+                        <h2 className="w-fit text-2xl font-extrabold">Caller: {focusSession.callerPhone} | {focusSession.startedAt}</h2>
+                        <OutlineButton name="Summarize" onClick={summarize} className="ml-8" />
                         <OutlineButton name="Transfer" onClick={transfer} className="ml-8" />
                       </div>
                         <p className="my-4 text-white"><span className="text-blue font-bold">Summary: </span>{focusSession.summary}</p>
                         <div className="">
-                          {focusSession.messages.map(msg => {
+                          {(focusSession.messages ? focusSession.messages : []).map(msg => {
                             return (
                               <div key={msg.id}>
                                 <p className="text-white"><span className={`${msg.role == "USER" ? "text-green-300" : "text-blue-300"} font-bold`}>{msg.role}: </span>{msg.content}</p>

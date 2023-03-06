@@ -40,6 +40,11 @@ const NavBar = () => {
   const {data: session} = useSession()
   const router = useRouter()
   const { toastDispatch } = useToasts()
+  const [path, setPath] = useState("")
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') setPath(window.location.href)
+  }, [path])
 
   useEffect(() => {
     const atTopCallback = () => {
@@ -67,7 +72,7 @@ const NavBar = () => {
           session ?
             <OutlineButton className='mt-4 md:ml-4 md:mt-0' name="Log Out" onClick={signOut} />
             :
-            <OutlineButton className='mt-4 md:ml-4 md:mt-0' name="Log In" onClick={() => signIn("google")}/>
+            <OutlineButton className='mt-4 md:ml-4 md:mt-0' name="Log In" onClick={() => signIn("google", {callbackUrl: path})}/>
         }
       </div>
     </nav>
