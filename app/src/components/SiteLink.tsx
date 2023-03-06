@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const SiteLink = ({txt, href, className=""}) => {
   return (
-    <Link href={href} passHref><a className={`${className}`}>{txt}</a></Link>
+    <Link href={href} passHref><a className={`underline text-white hover:text-blue transition-all ${className}`}>{txt}</a></Link>
   );
 }
 
