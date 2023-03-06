@@ -28,6 +28,7 @@ const Demo: NextPage<any> = ({ officers }) => {
   const [input, setInput] = useState({
     phone: '',
   })
+  const focusSessionMsgInterval = useRef(null);
   const [sessions, setSessions] = useState([])
   const [loadingSummary, setLoadingSummary] = useState(false)
   const [focusSession, setFocusSession] = useState(null)
@@ -94,6 +95,7 @@ const Demo: NextPage<any> = ({ officers }) => {
   }
 
   const closePop = async () => {
+    clearInterval(focusSessionMsgInterval.current);
     setFocusSession(null)
   }
 
@@ -106,13 +108,7 @@ const Demo: NextPage<any> = ({ officers }) => {
       if (focusSession) {
         if (!focusSession.messages) {
           await fetcher();
-          const cycle = () => setTimeout(async () => {
-            if (focusSession) {
-              await fetcher()
-              cycle()
-            }
-          }, updateDelay)
-          cycle()
+          focusSessionMsgInterval.current = setInterval(fetcher, updateDelay)
         }
       }
     }
