@@ -9,7 +9,7 @@ import { ToastAction, useToasts } from './ToastProvider';
 const NavLink = ({ index, href, name, onClick = () => { } }) => {
   return (
     <Link href={href} passHref>
-      <a className='mb-2 md:mx-4 md:mb-0 text-white hover:text-pink text-md transition-all' onClick={onClick}><span className='text-pink'>#{index}. </span>{name}</a>
+      <a className='mb-2 md:mx-4 md:mb-0 text-white hover:text-blue text-md transition-all' onClick={onClick}><span className='text-blue'>#{index}. </span>{name}</a>
     </Link>
   );
 }
@@ -17,9 +17,9 @@ const NavLink = ({ index, href, name, onClick = () => { } }) => {
 const HamburgerButton = ({ open, onClick = () => { } }) => {
   return (
     <button className='relative md:hidden' onClick={onClick}>
-      <div className={`w-8 h-[2px] bg-pink ${open ? 'translate-y-[10px] rotate-45' : ''} transition-all`}></div>
-      <div className={`my-2 w-8 h-[2px] ${open ? 'bg-transparent' : 'bg-pink'} transition-all`}></div>
-      <div className={`w-8 h-[2px] bg-pink ${open ? ' -translate-y-[10px] -rotate-45' : ''} transition-all`}></div>
+      <div className={`w-8 h-[2px] bg-blue ${open ? 'translate-y-[10px] rotate-45' : ''} transition-all`}></div>
+      <div className={`my-2 w-8 h-[2px] ${open ? 'bg-transparent' : 'bg-blue'} transition-all`}></div>
+      <div className={`w-8 h-[2px] bg-blue ${open ? ' -translate-y-[10px] -rotate-45' : ''} transition-all`}></div>
     </button>
   );
 }
@@ -27,9 +27,9 @@ const HamburgerButton = ({ open, onClick = () => { } }) => {
 const CloseButton = ({ open, className = '', onClick = () => { } }) => {
   return (
     <button className={`${className}`} onClick={onClick}>
-      <div className={`w-2 h-[2px] bg-pink ${open ? 'translate-y-[10px] rotate-45' : ''} transition-all`}></div>
-      <div className={`w-2 h-[2px] my-2 ${open ? 'bg-transparent' : 'bg-pink'} transition-all`}></div>
-      <div className={`w-2 h-[2px] bg-pink ${open ? ' -translate-y-[10px] -rotate-45' : ''} transition-all`}></div>
+      <div className={`w-2 h-[2px] bg-blue ${open ? 'translate-y-[10px] rotate-45' : ''} transition-all`}></div>
+      <div className={`w-2 h-[2px] my-2 ${open ? 'bg-transparent' : 'bg-blue'} transition-all`}></div>
+      <div className={`w-2 h-[2px] bg-blue ${open ? ' -translate-y-[10px] -rotate-45' : ''} transition-all`}></div>
     </button>
   );
 }
@@ -52,12 +52,12 @@ const NavBar = () => {
   })
 
   return (
-    <nav className={`relative h-ful ${atTop ? 'bg-transparent' : 'bg-navy'} flex items-center justify-between z-10 py-2 px-4 sm:px-12 lg:px-24 transition-all ease-in-out duration-500`}>
+    <nav className={`relative h-ful ${atTop ? 'bg-transparent' : 'bg-navy'} flex items-center justify-between z-10 py-6 px-4 sm:px-12 lg:px-24 transition-all ease-in-out duration-500`}>
       <div className='flex relative z-20'>
         <HamburgerButton open={isOpen} onClick={() => setOpen(!isOpen)} />
         <Link href="/" passHref>
-          <a className="relative ml-4 w-12 md:w-24 aspect-[5/3] opacity-90 hover:opacity-100 transition-all ease-in-out">
-            <Image src="/images/logo.png" alt="Logo" layout="fill" />
+          <a className="relative ml-4 w-12 md:w-20 aspect-[5/3] opacity-90 hover:opacity-100 transition-all ease-in-out">
+            <Image src="/images/logo.svg" alt="Logo" layout="fill" />
           </a>
         </Link>
       </div>

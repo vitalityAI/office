@@ -7,29 +7,30 @@ const Background = ({className}) => {
         "value": 70,
         "density": {
           "enable": true,
-           "area": 450
+          "area": 450
         }
       },
       "color": {
-        "value": "#ffffff"
+        "value": "#52abff",
       },
       "size": {
         "value": 30,
         "random": true
       },
       "shape": {
-        "type": "image",
-        "image": {
-          "src": "/images/snowflake.svg",
-        }
+        "type": "circle",
+        "stroke": {
+          "width": 4,
+          "color": "#52abff",
+          "opacity": 0.2
+        },
       },
       "opacity": {
-        "value": 0.75,
-        "random": true,
+        "random": true
       },
       "move": {
         "enable": true,
-        "speed": {min: 1, max: 2},
+        "speed": { min: 1, max: 2 },
         "direction": "bottom",
         "straight": false,
         "out_mode": "out",
@@ -85,10 +86,10 @@ const Background = ({className}) => {
 
   return (
     <div className='fixed top-0 left-0 w-full h-full bg-navy z-[-1]'>
-      {/* <Particles
-        className={`w-full h-full ${className}`}
+      <Particles
+        className={`w-full h-full ${className} opacity-[0.15]`}
         options={particleParams}
-      /> */}
+      />
     </div>
   );
 }
