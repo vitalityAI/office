@@ -12,9 +12,9 @@ import OutlineButton from "@/components/OutlineButton";
 import { useToasts } from "@/components/ToastProvider";
 import { useSession } from 'next-auth/react'
 
-const PageButton = ({ name = "", link, className = "" }) => {
+const PageButton = ({ name = "", link, target="_self", className = "" }) => {
   return (
-    <a href={link} className={`mt-8 group p-2 border-solid border bg-white bg-opacity-0 hover:bg-opacity-5 border-white transition-all ${className}`}>{name} <span className="ml-0 group-hover:ml-1 transition-all">{"->"}</span></a>
+    <a href={link} target={target} className={`mt-8 group p-2 border-solid border bg-white bg-opacity-0 hover:bg-opacity-5 border-white transition-all ${className}`}>{name} <span className="ml-0 group-hover:ml-1 transition-all">{"->"}</span></a>
   );
 }
 
@@ -34,7 +34,7 @@ const Home: NextPage<any> = ({ officers }) => {
               </ul>
               <div className="flex ml-6">
                 <PageButton name="Demo" link="/demo" />
-                <PageButton name="Devpost" link="https://devpost.com/software/vitality-q7sbh8" className="ml-4" />
+                <PageButton name="Devpost" link="https://devpost.com/software/vitality-q7sbh8" className="ml-4" target="_blank" />
               </div>
             </div>
 
